@@ -1,0 +1,33 @@
+/*
+==============================================================================================================================================
+Script Purpose: This script sets up the 'DataWareHouse' database and creates three schemas:
+'bronze', 'silver', and 'gold'. It ensures that any existing 'DataWareHouse' database is dropped before creating a new one,
+providing a clean slate for the data warehouse setup.
+==============================================================================================================================================
+Warnings: Running this scrpits will drop the existing 'DataWareHouse' database and all its contents.
+Ensure that you have backed up any important data before executing this script.
+*/
+
+USE master;
+GO
+
+-- Drop and recreate the 'DataWareHouse' database to ensure a clean slate for the data warehouse setup
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'DataWareHouse')
+BEGIN
+	ALTER DATABASE DataWareHouse SET MULTI_USER WITH ROLLBACK IMMEDIATE;
+	DROP DATABASE DataWareHouse;
+END;
+GO
+
+--Create the 'DataWareHouse' database
+
+CREATE DATABASE DataWareHouse;
+
+USE DataWareHouse;
+
+CREATE SCHEMA bronze;
+GO                                       -- The GO separate batches when working with multiple SQL statements
+CREATE SCHEMA silver;
+GO
+CREATE SCHEMA gold;
+GO
